@@ -1,10 +1,10 @@
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 import type { StripeCardElementChangeEvent } from '@stripe/stripe-js';
-import { api } from '../../../utils/api';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router.js';
+import { api } from '../../../utils/api';
 
 interface CheckoutFormProps {
   priceId: string;
@@ -57,7 +57,7 @@ const CheckoutForm = ({ priceId }: CheckoutFormProps) => {
   };
 
   return (
-    <form onSubmit={() => handleCheckoutFormSubmit} className="w-1/4">
+    <form onSubmit={handleCheckoutFormSubmit} className="w-1/4">
       <CardElement onChange={handleCardInputChange} />
       <button
         disabled={!stripe && disabled}

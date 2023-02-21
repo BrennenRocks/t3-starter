@@ -1,13 +1,13 @@
-import { type NextApiRequest, type NextApiResponse } from "next";
+import { type NextApiRequest, type NextApiResponse } from 'next';
 
-import { stripe } from "../../../server/stripe";
-import { env } from "../../../env/server.mjs";
+import { env } from '../../../env/server.mjs';
+import { stripe } from '../../../server/stripe';
 
 export const config = { api: { bodyParser: false } };
 const buffer = async (readable: NextApiRequest) => {
   const chunks = [];
   for await (const chunk of readable) {
-    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
   }
   return Buffer.concat(chunks);
 };
@@ -15,7 +15,7 @@ const buffer = async (readable: NextApiRequest) => {
 const stripeWebhooks = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const requestBuffer = await buffer(req);
-    const signature = req.headers["stripe-signature"] as string;
+    const signature = req.headers['stripe-signature'] as string;
     let event;
     try {
       event = stripe.webhooks.constructEvent(
@@ -30,7 +30,7 @@ const stripeWebhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     switch (event.type) {
-      case "subscription.created": {
+      case 'subscription.created': {
         const subscription = event.data.object;
         // You can use this to detect changes in the subscription
         // subscription.status will return the current status of the subscription
@@ -41,8 +41,8 @@ const stripeWebhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       }
 
-      case "customer.subscription.deleted":
-      case "customer.subscription.updated": {
+      case 'customer.subscription.deleted':
+      case 'customer.subscription.updated': {
         const subscription = event.data.object;
         // You can use this to detect changes in the subscription
         // subscription.status will return the current status of the subscription
@@ -54,7 +54,7 @@ const stripeWebhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       }
 
-      case "invoice.paid": {
+      case 'invoice.paid': {
         const invoice = event.data.object;
         // If you have trials, this event is triggered when the trial ended and the user was charged for continued access
         // Things you can do:
@@ -64,7 +64,7 @@ const stripeWebhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       }
 
-      case "invoice.payment_failed": {
+      case 'invoice.payment_failed': {
         const invoice = event.data.object;
         // The payment fails or the user does not have a valid payment method
         // The subscription is now past due
