@@ -57,16 +57,31 @@ const CheckoutForm = ({ priceId }: CheckoutFormProps) => {
   };
 
   return (
-    <form onSubmit={handleCheckoutFormSubmit} className="w-1/4">
-      <CardElement onChange={handleCardInputChange} />
-      <button
-        disabled={!stripe && disabled}
-        type="submit"
-        className="mt-4 rounded-lg bg-green-500 px-4 py-2 text-white"
-      >
-        Pay Now
-      </button>
-      <div className="text-red-600">{error}</div>
+    <form
+      onSubmit={handleCheckoutFormSubmit}
+      className="card w-1/4 bg-indigo-900 text-white shadow-xl"
+    >
+      <div className="card-body">
+        <h2 className="card-title">Start Your Training</h2>
+        <CardElement
+          onChange={handleCardInputChange}
+          options={{
+            style: {
+              base: {
+                color: 'white',
+              },
+            },
+          }}
+        />
+        <button
+          disabled={!stripe && disabled}
+          type="submit"
+          className="mt-4 rounded-lg bg-green-500 px-4 py-2 text-white"
+        >
+          Pay Now
+        </button>
+        <div className="text-red-600">{error}</div>
+      </div>
     </form>
   );
 };
