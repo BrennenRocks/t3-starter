@@ -1,7 +1,7 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
 
-import { env } from '../../../env/server.mjs';
-import { stripe } from '../../../server/stripe';
+import { env } from '@/env/server.mjs';
+import { stripe } from '@/server/stripe';
 
 export const config = { api: { bodyParser: false } };
 const buffer = async (readable: NextApiRequest) => {

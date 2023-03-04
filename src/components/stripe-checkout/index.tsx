@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import type { StripeCardElementChangeEvent } from '@stripe/stripe-js';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router.js';
-import { api } from '../../../utils/api';
+import { api } from '../../utils/api';
 
 interface CheckoutFormProps {
   priceId: string;
