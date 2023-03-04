@@ -1,3 +1,4 @@
+import Navbar from '@/components/stripe-checkout/Navbar';
 import { type NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
@@ -16,6 +17,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Employee training made easy" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Navbar />
       <main className="flex min-h-screen flex-col items-center justify-center bg-base-100">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <div className="hero">
