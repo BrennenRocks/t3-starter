@@ -5,10 +5,11 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { env } from '@/env/client.mjs';
 import CheckoutForm from '@/components/stripe-checkout';
+import { type NextPage } from 'next';
 
 const stripePromise = loadStripe(env.NEXT_PUBLIC_DEV_STRIPE_PUBLISHABLE_KEY);
 
-const Pricing = () => {
+const Pricing: NextPage = () => {
   const router = useRouter();
   useSession({
     required: true,

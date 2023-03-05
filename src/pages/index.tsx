@@ -1,7 +1,7 @@
-import Navbar from '@/components/stripe-checkout/Navbar';
+import Main from '@/components/Main';
 import { type NextPage } from 'next';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import { api } from '../utils/api';
 
@@ -15,18 +15,23 @@ const Home: NextPage = () => {
         <meta name="description" content="Employee training made easy" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <main className="flex min-h-screen flex-col items-center justify-center bg-base-100">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <div className="hero">
-            <div className="hero-content text-center">
-              <div className="max-w-md">
-                <h1 className="text-5xl font-bold">Hello there</h1>
-                <p className="py-6">
-                  Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                  assumenda excepturi exercitationem quasi. In deleniti eaque
-                  aut repudiandae et a id nisi.
+      <Main>
+        <div className="container flex flex-col gap-12 px-44 py-16">
+          <div className="hero justify-start">
+            <div className="hero-content flex-col lg:flex-row">
+              <div>
+                <p className="py-6 text-xs text-secondary opacity-60">
+                  JOIN WITH OTHERS
                 </p>
+                <h1 className="text-5xl font-bold">
+                  Train Smarter, Not Harder
+                </h1>
+                <p className="py-6 font-semibold">
+                  Revolutionize Your Employee Learning with E-Training
+                </p>
+                <Link href="/pricing" className="btn-primary btn">
+                  Pricing
+                </Link>
               </div>
             </div>
           </div>
@@ -34,36 +39,11 @@ const Home: NextPage = () => {
             <p className="text-2xl">
               {hello.data ? hello.data.greeting : 'Loading tRPC query...'}
             </p>
-            <AuthShowcase />
           </div>
         </div>
-      </main>
+      </Main>
     </>
   );
 };
 
 export default Home;
-
-const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="btn-accent btn"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? 'Sign out' : 'Sign in'}
-      </button>
-    </div>
-  );
-};

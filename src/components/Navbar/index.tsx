@@ -1,3 +1,4 @@
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
 
@@ -27,7 +28,7 @@ const Navbar = () => {
             className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
           >
             <li>
-              <Link href="/about">About</Link>
+              <AboutLink />
             </li>
             {/* <li tabIndex={0}>
               <a className="justify-between">
@@ -58,7 +59,7 @@ const Navbar = () => {
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link href="/about">About</Link>
+            <AboutLink />
           </li>
           {/* <li tabIndex={0}>
             <a>
@@ -82,18 +83,31 @@ const Navbar = () => {
               </li>
             </ul>
           </li> */}
-          <Link href="/pricing" className="btn-primary btn">
-            Pricing
-          </Link>
+          <PricingLink />
         </ul>
       </div>
       <div className="navbar-end lg:hidden">
-        <Link href="/pricing" className="btn-primary btn">
-          Pricing
-        </Link>
+        <PricingLink />
       </div>
     </nav>
   );
 };
 
 export default Navbar;
+
+const AboutLink = () => {
+  return <Link href="/about">About</Link>;
+};
+
+const PricingLink = () => {
+  const { data: sessionData } = useSession();
+
+  return (
+    <button
+      className={`${sessionData ? 'btn-accent' : 'btn-success'} btn`}
+      onClick={sessionData ? () => void signOut() : () => void signIn('google')}
+    >
+      {sessionData ? 'Sign out' : 'Sign in'}
+    </button>
+  );
+};
