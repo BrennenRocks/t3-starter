@@ -3,11 +3,9 @@ import { type NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 
-import { useRouter } from 'next/router';
 import { api } from '../utils/api';
 
 const Home: NextPage = () => {
-  const router = useRouter();
   const hello = api.example.hello.useQuery({ text: 'Yo Momma' });
 
   return (
@@ -29,12 +27,6 @@ const Home: NextPage = () => {
                   assumenda excepturi exercitationem quasi. In deleniti eaque
                   aut repudiandae et a id nisi.
                 </p>
-                <button
-                  className="btn-primary btn"
-                  onClick={() => void router.push('pricing-page')}
-                >
-                  Pricing
-                </button>
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ import CheckoutForm from '@/components/stripe-checkout';
 
 const stripePromise = loadStripe(env.NEXT_PUBLIC_DEV_STRIPE_PUBLISHABLE_KEY);
 
-const PricingPage = () => {
+const Pricing = () => {
   const router = useRouter();
   useSession({
     required: true,
@@ -51,4 +51,4 @@ const PricingPage = () => {
   );
 };
 
-export default PricingPage;
+export default Pricing;

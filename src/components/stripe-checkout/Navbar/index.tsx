@@ -1,8 +1,9 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Navbar = () => {
   return (
-    <nav className="navbar bg-base-100">
+    <nav className="navbar bg-base-100 lg:px-28">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn-ghost btn lg:hidden">
@@ -26,9 +27,9 @@ const Navbar = () => {
             className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
           >
             <li>
-              <a>Item 1</a>
+              <Link href="/about">About</Link>
             </li>
-            <li tabIndex={0}>
+            {/* <li tabIndex={0}>
               <a className="justify-between">
                 Parent
                 <svg
@@ -49,20 +50,17 @@ const Navbar = () => {
                   <a>Submenu 2</a>
                 </li>
               </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
+            </li> */}
           </ul>
         </div>
-        <a className="btn-ghost btn text-xl normal-case">daisyUI</a>
+        <a className="btn-ghost btn text-xl normal-case">E-Training</a>
       </div>
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Item 1</a>
+            <Link href="/about">About</Link>
           </li>
-          <li tabIndex={0}>
+          {/* <li tabIndex={0}>
             <a>
               Parent
               <svg
@@ -83,14 +81,16 @@ const Navbar = () => {
                 <a>Submenu 2</a>
               </li>
             </ul>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
+          </li> */}
+          <Link href="/pricing" className="btn-primary btn">
+            Pricing
+          </Link>
         </ul>
       </div>
-      <div className="navbar-end">
-        <a className="btn">Get started</a>
+      <div className="navbar-end lg:hidden">
+        <Link href="/pricing" className="btn-primary btn">
+          Pricing
+        </Link>
       </div>
     </nav>
   );
