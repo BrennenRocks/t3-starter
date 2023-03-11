@@ -1,17 +1,24 @@
-# Create T3 App
+# Employee Training
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## PostgreSQL
 
-## What's next? How do I make an app with this?
+Setup a PostgreSQL DB and get the connection string and put it as the DATABASE_URL variable in `.env`
+Then run `npx prisma db push`
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Stripe Webhooks
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Install [Stripe CLI](https://stripe.com/docs/stripe-cli)
+Make sure you login and then run `pnpm stripe` in a separate terminal to see the webhook calls come in
+
+## This project is built using the T3 Stack
+
+If you are not familiar with the different technologies used in this project, please refer to the respective docs.
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
 - [Tailwind CSS](https://tailwindcss.com)
+- [Daisy UI](https://daisyui.com/)
 - [tRPC](https://trpc.io)
 
 ## Learn More
