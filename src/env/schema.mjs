@@ -1,5 +1,5 @@
 // @ts-check
-import { z } from "zod";
+import { z } from 'zod';
 
 /**
  * Specify your server-side environment variables schema here.
@@ -7,9 +7,9 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
-  NODE_ENV: z.enum(["development", "test", "production"]),
+  NODE_ENV: z.enum(['development', 'test', 'production']),
   NEXTAUTH_SECRET:
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === 'production'
       ? z.string().min(1)
       : z.string().min(1).optional(),
   NEXTAUTH_URL: z.preprocess(
@@ -48,6 +48,8 @@ export const serverEnv = {
  */
 export const clientSchema = z.object({
   NEXT_PUBLIC_DEV_STRIPE_PUBLISHABLE_KEY: z.string(),
+  NEXT_PUBLIC_BASIC_PRICE_ID: z.string(),
+  NEXT_PUBLIC_PRO_PRICE_ID: z.string(),
 });
 
 /**
@@ -59,4 +61,6 @@ export const clientSchema = z.object({
 export const clientEnv = {
   NEXT_PUBLIC_DEV_STRIPE_PUBLISHABLE_KEY:
     process.env.NEXT_PUBLIC_DEV_STRIPE_PUBLISHABLE_KEY,
+  NEXT_PUBLIC_BASIC_PRICE_ID: process.env.NEXT_PUBLIC_BASIC_PRICE_ID,
+  NEXT_PUBLIC_PRO_PRICE_ID: process.env.NEXT_PUBLIC_PRO_PRICE_ID,
 };

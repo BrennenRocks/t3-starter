@@ -2,23 +2,16 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 
 import type { StripeCardElementChangeEvent } from '@stripe/stripe-js';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router.js';
-import { api } from '../../utils/api';
+import { api } from '../../../utils/api';
+import type { PlanNameType } from '@/utils/consts/plans';
+import { PLANS } from '@/utils/consts/plans';
+import { capitalizeFirstLetter } from '@/utils/functions/strings';
 
 interface CheckoutFormProps {
-  priceId: string;
+  planName: PlanNameType;
 }
 
-const CheckoutForm = ({ priceId }: CheckoutFormProps) => {
-  const router = useRouter();
-  useSession({
-    required: true,
-    onUnauthenticated: () => {
-      router.back();
-    },
-  });
-
+const CheckoutForm = ({ planName }: CheckoutFormProps) => {
   const [error, setError] = useState('');
   const [disabled, setDisabled] = useState(false);
   const stripe = useStripe();
@@ -39,7 +32,9 @@ const CheckoutForm = ({ priceId }: CheckoutFormProps) => {
       return;
     }
 
-    const subscriptionRes = await createSubscription.mutateAsync({ priceId });
+    const subscriptionRes = await createSubscription.mutateAsync({
+      priceId: PLANS[planName].stripePriceId,
+    });
     const cardElement = elements.getElement(CardElement);
     if (!subscriptionRes.clientSecret || !cardElement) {
       setError('There was an error, try again later');
@@ -59,10 +54,16 @@ const CheckoutForm = ({ priceId }: CheckoutFormProps) => {
   return (
     <form
       onSubmit={handleCheckoutFormSubmit}
-      className="card w-1/4 bg-indigo-900 text-white shadow-xl"
+      className="card w-full bg-neutral text-neutral-content shadow-xl sm:w-1/2"
     >
       <div className="card-body">
-        <h2 className="card-title">Start Your Training</h2>
+        <h2 className="card-title">
+          Checkout with the {capitalizeFirstLetter(planName)} plan
+        </h2>
+        <div>
+          ${PLANS[planName].price} / mo{' '}
+          <span className="italic">starting today</span>
+        </div>
         <CardElement
           onChange={handleCardInputChange}
           options={{

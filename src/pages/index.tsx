@@ -3,11 +3,7 @@ import { type NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { api } from '../utils/api';
-
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: 'Yo Momma' });
-
   return (
     <>
       <Head>
@@ -30,15 +26,10 @@ const Home: NextPage = () => {
                   Revolutionize Your Employee Learning with E-Training
                 </p>
                 <Link href="/pricing" className="btn-primary btn">
-                  Pricing
+                  Get Started
                 </Link>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl">
-              {hello.data ? hello.data.greeting : 'Loading tRPC query...'}
-            </p>
           </div>
         </div>
       </Main>

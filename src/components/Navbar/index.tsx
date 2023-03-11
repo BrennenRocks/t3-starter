@@ -54,10 +54,12 @@ const Navbar = () => {
             </li> */}
           </ul>
         </div>
-        <a className="btn-ghost btn text-xl normal-case">E-Training</a>
+        <Link href="/" className="btn-ghost btn text-xl normal-case">
+          E-Training
+        </Link>
       </div>
       <div className="navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal items-center px-1">
           <li>
             <AboutLink />
           </li>
@@ -104,7 +106,7 @@ const PricingLink = () => {
 
   return (
     <button
-      className={`${sessionData ? 'btn-accent' : 'btn-success'} btn`}
+      className={`${sessionData ? 'btn-accent' : 'btn-success'} btn-sm btn`}
       onClick={sessionData ? () => void signOut() : () => void signIn('google')}
     >
       {sessionData ? 'Sign out' : 'Sign in'}
