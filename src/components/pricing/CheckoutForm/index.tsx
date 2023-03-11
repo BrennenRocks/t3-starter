@@ -6,12 +6,21 @@ import { api } from '../../../utils/api';
 import type { PlanNameType } from '@/utils/consts/plans';
 import { PLANS } from '@/utils/consts/plans';
 import { capitalizeFirstLetter } from '@/utils/functions/strings';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 interface CheckoutFormProps {
   planName: PlanNameType;
 }
 
 const CheckoutForm = ({ planName }: CheckoutFormProps) => {
+  const router = useRouter();
+  useSession({
+    required: true,
+    onUnauthenticated: () => {
+      router.back();
+    },
+  });
   const [error, setError] = useState('');
   const [disabled, setDisabled] = useState(false);
   const stripe = useStripe();
@@ -35,6 +44,7 @@ const CheckoutForm = ({ planName }: CheckoutFormProps) => {
     const subscriptionRes = await createSubscription.mutateAsync({
       priceId: PLANS[planName].stripePriceId,
     });
+
     const cardElement = elements.getElement(CardElement);
     if (!subscriptionRes.clientSecret || !cardElement) {
       setError('There was an error, try again later');
@@ -49,6 +59,8 @@ const CheckoutForm = ({ planName }: CheckoutFormProps) => {
     if (stripePayload.error) {
       setError(stripePayload.error.message ?? '');
     }
+
+    void router.replace('/');
   };
 
   return (

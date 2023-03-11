@@ -1,5 +1,5 @@
 import Main from '@/components/Main';
-import CheckoutForm from 'src/pages/pricing/CheckoutForm';
+import { CheckoutForm } from '@/components/pricing';
 import { env } from '@/env/client.mjs';
 import type { PlanNameType } from '@/utils/consts/plans';
 import { Elements } from '@stripe/react-stripe-js';
@@ -13,16 +13,16 @@ const Checkout = () => {
   const { query } = useRouter();
   const planName = query.plan as PlanNameType;
 
-  if (!planName) {
-    return <progress className="progress w-56"></progress>;
-  }
-
   return (
     <Main>
       <div className="container flex items-center justify-center gap-12 px-4 py-16">
-        <Elements stripe={stripePromise}>
-          <CheckoutForm planName={planName} />
-        </Elements>
+        {!planName ? (
+          <progress className="progress w-56" />
+        ) : (
+          <Elements stripe={stripePromise}>
+            <CheckoutForm planName={planName} />
+          </Elements>
+        )}
       </div>
     </Main>
   );

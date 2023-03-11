@@ -16,12 +16,12 @@
  * processing a request
  *
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
+import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
+import { type Session } from 'next-auth';
 
-import { getServerAuthSession } from "../auth";
-import { prisma } from "../db";
-import { stripe } from "../stripe";
+import { getServerAuthSession } from '../auth';
+import { prisma } from '../db';
+import { stripe } from '../stripe';
 
 type CreateContextOptions = {
   session: Session | null;
@@ -66,8 +66,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
+import { initTRPC, TRPCError } from '@trpc/server';
+import superjson from 'superjson';
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
@@ -111,7 +111,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
     !ctx.session.user.email ||
     !ctx.session.user.image
   ) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
   return next({
     ctx: {
@@ -120,6 +120,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
         ...ctx.session,
         user: {
           id: ctx.session.user.id,
+          tenantId: ctx.session.user.tenantId,
           name: ctx.session.user.name,
           email: ctx.session.user.email,
           image: ctx.session.user.image,

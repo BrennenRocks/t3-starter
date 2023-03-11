@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Tenant {
+  id                 String  @id @default(cuid())
+  name               String
+  subscriptionActive Boolean @default(false)
+  stripeSubId        String?
+  stripeCustomerId   String?
+  users              User[]
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -39,8 +48,8 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  tenantId      String
-  tenant        Tenant    @relation(fields: [tenantId], references: [id])
+  tenantId      String?
+  tenant        Tenant?   @relation(fields: [tenantId], references: [id])
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -55,12 +64,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model Tenant {
-  id               String @id @default(cuid())
-  name             String
-  stripeSubId      String
-  stripeCustomerId String
-  users             User[]
 }

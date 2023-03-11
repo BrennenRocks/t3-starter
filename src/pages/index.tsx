@@ -1,7 +1,7 @@
 import Main from '@/components/Main';
 import { type NextPage } from 'next';
+import { signIn } from 'next-auth/react';
 import Head from 'next/head';
-import Link from 'next/link';
 
 const Home: NextPage = () => {
   return (
@@ -25,9 +25,12 @@ const Home: NextPage = () => {
                 <p className="py-6 font-semibold">
                   Revolutionize Your Employee Learning with E-Training
                 </p>
-                <Link href="/pricing" className="btn-primary btn">
-                  Get Started
-                </Link>
+                <button
+                  onClick={() => void signIn('google')}
+                  className="btn-primary btn"
+                >
+                  Sign In To Get Started
+                </button>
               </div>
             </div>
           </div>

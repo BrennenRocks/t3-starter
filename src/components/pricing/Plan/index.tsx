@@ -1,6 +1,7 @@
 import type { PlanNameType } from '@/utils/consts/plans';
 import { PLANS } from '@/utils/consts/plans';
 import { capitalizeFirstLetter } from '@/utils/functions/strings';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -9,11 +10,23 @@ interface PlanProps {
 }
 
 const Plan = ({ planName }: PlanProps) => {
+  const { status } = useSession();
   const router = useRouter();
   const plan = PLANS[planName];
 
+  const handleGetStarted = () => {
+    const checkoutUrl = `/pricing/${planName}`;
+    if (status === 'authenticated') {
+      void router.push(checkoutUrl);
+      return;
+    }
+
+    // TODO: Try to make this remember which plan is chosen
+    void signIn('google', undefined, { plan: planName });
+  };
+
   return (
-    <div className="card w-96 bg-neutral text-neutral-content">
+    <div className="card w-full bg-neutral text-neutral-content">
       <div className="card-body">
         <div>
           <div className="mb-2 text-sm text-cyan-400">
@@ -31,7 +44,8 @@ const Plan = ({ planName }: PlanProps) => {
           <div className="card-actions mt-8">
             <button
               className="btn-outline btn text-cyan-400"
-              onClick={() => void router.push(`/pricing/${planName}`)}
+              onClick={handleGetStarted}
+              disabled={status === 'loading'}
             >
               Get Started Now
             </button>
