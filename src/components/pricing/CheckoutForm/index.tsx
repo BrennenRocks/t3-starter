@@ -60,7 +60,7 @@ const CheckoutForm = ({ planName }: CheckoutFormProps) => {
       setError(stripePayload.error.message ?? '');
     }
 
-    void router.replace('/');
+    void router.replace('/dashboard');
   };
 
   return (

@@ -1,7 +1,7 @@
 import { createTRPCRouter } from './trpc';
 import { exampleRouter } from './routers/example';
 import { stripeRouter } from './routers/stripe/router';
-import { tenantRouter } from './routers/tenant';
+import { tenantRouter } from './routers/tenants/router';
 
 /**
  * This is the primary router for your server.

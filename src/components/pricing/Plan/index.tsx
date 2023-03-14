@@ -1,20 +1,24 @@
 import type { PlanNameType } from '@/utils/consts/plans';
+import { PLAN_NAMES } from '@/utils/consts/plans';
 import { PLANS } from '@/utils/consts/plans';
 import { capitalizeFirstLetter } from '@/utils/functions/strings';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useLocalStorage } from '@/hooks/local-storage';
 
 interface PlanProps {
   planName: PlanNameType;
 }
 
 const Plan = ({ planName }: PlanProps) => {
+  const [, setPlan] = useLocalStorage('plan', planName);
   const { status } = useSession();
   const router = useRouter();
   const plan = PLANS[planName];
 
   const handleGetStarted = () => {
+    setPlan(PLAN_NAMES.basic);
     const checkoutUrl = `/pricing/${planName}`;
     if (status === 'authenticated') {
       void router.push(checkoutUrl);
@@ -22,7 +26,7 @@ const Plan = ({ planName }: PlanProps) => {
     }
 
     // TODO: Try to make this remember which plan is chosen
-    void signIn('google', undefined, { plan: planName });
+    void signIn('google', { callbackUrl: checkoutUrl });
   };
 
   return (

@@ -20,7 +20,8 @@
       "@/components/*": ["src/components/*"],
       "@/env/*": ["src/env/*"],
       "@/server/*": ["src/server/*"],
-      "@/utils/*": ["src/utils/*"]
+      "@/utils/*": ["src/utils/*"],
+      "@/hooks/*": ["src/hooks/*"]
     }
   },
   "include": [
