@@ -85,11 +85,11 @@ const Navbar = () => {
               </li>
             </ul>
           </li> */}
-          <PricingLink />
+          <AuthenticationButton />
         </ul>
       </div>
       <div className="navbar-end lg:hidden">
-        <PricingLink />
+        <AuthenticationButton />
       </div>
     </nav>
   );
@@ -101,7 +101,7 @@ const AboutLink = () => {
   return <Link href="/about">About</Link>;
 };
 
-const PricingLink = () => {
+const AuthenticationButton = () => {
   const { data: sessionData } = useSession();
 
   return (

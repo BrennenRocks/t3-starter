@@ -1,9 +1,14 @@
 import Main from '@/components/Main';
 import { type NextPage } from 'next';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
+  const { status } = useSession();
+
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -26,10 +31,17 @@ const Home: NextPage = () => {
                   Revolutionize Your Employee Learning with E-Training
                 </p>
                 <button
-                  onClick={() => void signIn('google')}
+                  disabled={status === 'loading'}
+                  onClick={() =>
+                    status === 'authenticated'
+                      ? void router.push('/dashboard')
+                      : void signIn('google')
+                  }
                   className="btn-primary btn"
                 >
-                  Sign In To Get Started
+                  {status === 'authenticated'
+                    ? 'Dashboard'
+                    : 'Sign In To Get Started'}
                 </button>
               </div>
             </div>
