@@ -6,13 +6,14 @@ import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useLocalStorage } from '@/hooks/local-storage';
+import { LocalStorageKeys } from 'src/services/local-storage';
 
 interface PlanProps {
   planName: PlanNameType;
 }
 
 const Plan = ({ planName }: PlanProps) => {
-  const [, setPlan] = useLocalStorage('plan', planName);
+  const [, setPlan] = useLocalStorage(LocalStorageKeys.PLAN, planName);
   const { status } = useSession();
   const router = useRouter();
   const plan = PLANS[planName];

@@ -1,5 +1,5 @@
 import { createTRPCRouter, protectedProcedure } from '../../trpc';
-import { createTenant } from './validations';
+import { createTenant } from './tenants.validations';
 
 export const tenantRouter = createTRPCRouter({
   create: protectedProcedure
